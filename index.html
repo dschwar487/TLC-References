@@ -3,6 +3,7 @@
 <html lang='en'>
 <head>
 <meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
 <title>TLC Reference Table</title>
 <style>
 body {
@@ -121,6 +122,80 @@ document.querySelectorAll('tr.clickable-row').forEach(function(row) {
     var target = row.getAttribute('data-href');
     if (target) {
       window.open(target, '_blank');
+    }
+  });
+});
+</script>
+<script>
+// Fix PDF links by properly URL-encoding paths for GitHub Pages
+document.addEventListener('DOMContentLoaded', function() {
+  // Fix data-href attributes on clickable rows
+  document.querySelectorAll('tr.clickable-row[data-href]').forEach(function(row) {
+    var href = row.getAttribute('data-href');
+    if (!href) return;
+    
+    // Skip if it's just the folder name without a file
+    if (href === 'tlc_references_pdfs' || href === 'tlc_references_pdfs/') {
+      return;
+    }
+    
+    // Extract filename from file:/// protocol paths
+    var filename = '';
+    if (href.startsWith('file:///')) {
+      // Extract the last part of the path (the filename)
+      var parts = href.split('/');
+      filename = parts[parts.length - 1];
+      // Decode any existing URL encoding
+      filename = decodeURIComponent(filename);
+    } else if (href.includes('tlc_references_pdfs/')) {
+      // Already has the right prefix, just get the filename
+      filename = href.split('tlc_references_pdfs/')[1];
+      if (filename) {
+        filename = decodeURIComponent(filename);
+      }
+    } else {
+      // Assume it's just a filename
+      filename = href;
+    }
+    
+    if (filename) {
+      // Construct the proper path and encode it
+      var basePath = 'tlc_references_pdfs/';
+      // Encode each component properly
+      var encodedFilename = encodeURIComponent(filename);
+      var newHref = basePath + encodedFilename;
+      row.setAttribute('data-href', newHref);
+    }
+  });
+  
+  // Also fix any anchor tags that might exist
+  document.querySelectorAll('a[href*="tlc_references_pdfs"], a[href$=".pdf"], a[href$=".PDF"]').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (!href || href.startsWith('http://') || href.startsWith('https://')) return;
+    
+    try {
+      // Parse the URL to get path segments
+      var url = new URL(href, window.location.href);
+      var pathSegments = url.pathname.split('/').filter(function(s) { return s; });
+      
+      // Re-encode each segment to handle spaces and special characters
+      var encodedSegments = pathSegments.map(function(segment) {
+        // Decode first to avoid double-encoding
+        var decoded = decodeURIComponent(segment);
+        return encodeURIComponent(decoded);
+      });
+      
+      url.pathname = '/' + encodedSegments.join('/');
+      link.setAttribute('href', url.pathname + url.search + url.hash);
+    } catch (e) {
+      // Fallback: simple encoding
+      if (href.includes('tlc_references_pdfs/')) {
+        var parts = href.split('tlc_references_pdfs/');
+        if (parts.length > 1) {
+          var filename = decodeURIComponent(parts[1]);
+          link.setAttribute('href', 'tlc_references_pdfs/' + encodeURIComponent(filename));
+        }
+      }
     }
   });
 });
