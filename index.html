@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLC References</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .references-table {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .pdf-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .pdf-link::before {
+            content: "📄";
+        }
+        .description {
+            color: #666;
+        }
+        .instructions {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .instructions h2 {
+            margin-top: 0;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <h1>TLC References</h1>
+    
+    <div class="instructions">
+        <h2>How to Use This Repository</h2>
+        <p><strong>To add your PDFs and references:</strong></p>
+        <ol>
+            <li>Upload your PDF files to the <code>pdfs/</code> directory</li>
+            <li>Edit this <code>index.html</code> file to add rows to the table below</li>
+            <li>Update the links to point to your PDF files (e.g., <code>pdfs/your-document.pdf</code>)</li>
+            <li>Commit and push your changes to GitHub</li>
+            <li>Enable GitHub Pages in the repository settings (Settings → Pages → Source: main branch)</li>
+        </ol>
+        <p>Your references will be accessible at: <code>https://[your-username].github.io/TLC-References/</code></p>
+    </div>
+
+    <div class="references-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author(s)</th>
+                    <th>Year</th>
+                    <th>Description</th>
+                    <th>Document</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example reference rows - Replace these with your actual references -->
+                <tr>
+                    <td>Sample Reference 1</td>
+                    <td>John Doe, Jane Smith</td>
+                    <td>2024</td>
+                    <td class="description">This is an example reference entry. Replace with your actual reference information.</td>
+                    <td><a href="pdfs/sample1.pdf" class="pdf-link" target="_blank">View PDF</a></td>
+                </tr>
+                <tr>
+                    <td>Sample Reference 2</td>
+                    <td>Alice Johnson</td>
+                    <td>2023</td>
+                    <td class="description">Another example reference. Add more rows as needed for your documents.</td>
+                    <td><a href="pdfs/sample2.pdf" class="pdf-link" target="_blank">View PDF</a></td>
+                </tr>
+                <tr>
+                    <td>Sample Reference 3</td>
+                    <td>Bob Williams, Carol Brown</td>
+                    <td>2025</td>
+                    <td class="description">Third example reference demonstrating the table structure.</td>
+                    <td><a href="pdfs/sample3.pdf" class="pdf-link" target="_blank">View PDF</a></td>
+                </tr>
+                <!-- Add your references here following the same pattern -->
+            </tbody>
+        </table>
+    </div>
+
+    <footer style="text-align: center; margin-top: 40px; color: #666; font-size: 14px;">
+        <p>TLC References - Last updated: <span id="lastUpdate"></span></p>
+        <script>
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString();
+        </script>
+    </footer>
+</body>
+</html>
